@@ -1,0 +1,25 @@
+source config.sh
+
+# arguments: bash scripts
+# The contents of the script + header are written to the job queue dir. 
+# If multiple jobs are created in the same second, adds a counter to the name.
+
+user=$(whoami)
+
+for job in "$@"; do
+	filename=$(date +%s)-$user$JOB_EXT
+	jobfile=$QUEUE_DIR$filename
+
+	count=1
+	while [ -e "$jobfile" ]; do 	# if job already exists, add a counter to name
+		filename=$(date +%s)-$user-$count$JOB_EXT
+		jobfile=$QUEUE_DIR$filename
+		count=$((count+1))
+	done
+
+	datetime=`date $DATETIME_NICE`
+	header=$(printf "$JOB_HEADER_1" "$filename" "$user" "$datetime")
+
+	echo -e "$header\n$(cat $job)" > $jobfile
+	sleep 1
+done
