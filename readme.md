@@ -19,7 +19,8 @@ nubq/
 		enqueue			# command to add scripts to queue
 		install.sh		# install script
 		q.sh			# the actual job runner
-		uninstall.sh	# uninstall script
+		uninstall.sh		# uninstall script
+		start-q			# startup script
 	done/
 		*.out 			# output of the job 
 		*.err 			# error output of the job
@@ -29,6 +30,7 @@ nubq/
 	error.log 			# error log
 	jobs.log 			# activity log
 	KILLSWITCH 			# killswitch file
+	readme.md			# this readme
 ```
 The `nubq/bin/` folder is added to PATH for all users at installation, so everyone can call enqueue from anywhere. (is this ok? Would it be better to just move enqueue to `/usr/local/`?)
 
@@ -67,7 +69,16 @@ The DONE dir contains the jobfiles that were completed, along with their output 
 The killswitch is a simple mechanism to stop Q. It's an empty file, located in Q's root directory. Q won't run if it's not present and checks for its existence before starting a job. To stop Q, delete, move or rename the file. Q will end on the next loop iteration and you will have to run it again. 
 Note, that the killswitch has no effect while Q is executing a job - this does not protect us from an infinite job script, it just makes it easier to stop the daemon.
 
+### INSTALLATION & USAGE
+* clone the repo
+* move into `bin` dir and execute `install.sh`
+* if no errors were generate, you are good to go!
+
+* run `start-q` to start up the job runner daemon (you will have to do this after every reboot)
+* use `enqueue [SCRIPT1 SCRIPT2 ...]` to enqueue jobs
+
 ### TODO
-* finish and test the install script 
+* stop-q
+* uninstall script
 * look into running as a service
 * find a way to forcefully stop a running job

@@ -1,0 +1,4 @@
+#! /bin/bash
+
+# Start Q jobrunner in background as the user q.
+su -l -s /bin/bash -c 'q.sh &' q

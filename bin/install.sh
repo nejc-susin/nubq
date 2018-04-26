@@ -21,9 +21,16 @@ export PATH=$PATH:"$ROOT"/bin
 cp ./enqueue "$ROOT/bin"
 cp ./q.sh "$ROOT/bin"
 cp ./config.sh "$ROOT/bin"
+cp ./start-q "$ROOT/bin"
 
 sudo chown -R q "$ROOT"
 sudo chmod -R 764 "$ROOT"
+sudo chmod -R a+x "$ROOT/bin"
 
-cd "$ROOT"
-sudo umask 013
+ln "$ROOT/bin/start-q" /usr/bin/start-q
+
+# add bin to PATH
+echo "export PATH=\$PATH:$ROOT/bin" >> /etc/profile
+export "PATH=$PATH:$ROOT/bin"
+
+echo 'NubQ was installed! Use start-q to start it up.'
