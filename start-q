@@ -1,0 +1,3 @@
+#! /bin/bash
+su q -c "nohup /nubq/nubq/q.sh 1>>/nubq/jobs.log 2>>/nubq/error.log &"
+echo "Q started!"

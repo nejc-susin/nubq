@@ -9,7 +9,7 @@ DONE_DIR="$ROOT_DIR/done/"			# save job results
 LOGFILE="$ROOT_DIR/jobs.log"		# records operations
 ERRFILE="$ROOT_DIR/error.log"   	# records errors
 
-KILLSWITCH="$ROOT_DIR/KILLSWITCH"	# remove this file to stop Q
+KILLSWITCH="$ROOT_DIR/nubq/KILLSWITCH"	# remove this file to stop Q
 
 JOB_EXT='.job'
 DONE_EXT='.done'

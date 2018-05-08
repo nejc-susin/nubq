@@ -63,19 +63,23 @@ When added to the queue, a header is prepended to the top of the file. Once the 
 ```
 
 The jobfile's filename contains the timestamp of when it entered the queue and the name of the user that submitted it.
-The DONE dir contains the jobfiles that were completed, along with their output and error log.
+The `done` dir contains the jobfiles that were completed, along with their output and error log.
 
 ### KILLSWITCH
-The killswitch is a simple mechanism to stop Q. It's an empty file, located in Q's root directory. Q won't run if it's not present and checks for its existence before starting a job. To stop Q, delete, move or rename the file. Q will end on the next loop iteration and you will have to run it again. 
-Note, that the killswitch has no effect while Q is executing a job - this does not protect us from an infinite job script, it just makes it easier to stop the daemon.
+The killswitch is a simple mechanism to stop Q. It's an empty file, located in Q's root directory. Q checks for its existence before starting a job and won't run if it is not present. To stop Q, delete, move or rename the file. Q will end on the next loop iteration and you will have to run it again. 
+Note, that the killswitch has no effect while Q is executing a job - this does not protect us from infinite loops within job scripts, it just makes it easier to stop the daemon.
 
 ### INSTALLATION & USAGE
 * clone the repo
 * move into `bin` dir and execute `install.sh`
 * if no errors were generate, you are good to go!
 
-* run `start-q` to start up the job runner daemon (you will have to do this after every reboot)
+* run `sudo start-q` to start up the job runner daemon (you will have to do this after every reboot)
 * use `enqueue [SCRIPT1 SCRIPT2 ...]` to enqueue jobs
+
+### TROUBLESHOOTING
+Make sure `/nubq/bin` is in your `PATH` environment variable.
+Check the permissions on files in NubQ root dir. `KILLSWITCH` and `jobs` dir should be 777, the rest is 755. 
 
 ### TODO
 * stop-q

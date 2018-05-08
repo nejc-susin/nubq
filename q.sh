@@ -4,8 +4,8 @@
 
 source config.sh
 
-exec > >(tee -ia "$LOGFILE")
-exec 2> >(tee -ia "$ERRFILE")
+#exec > >(tee -ia "$LOGFILE")
+#exec 2> >(tee -ia "$ERRFILE")
 
 while [ -f "$KILLSWITCH" ]; do
    	for file in $QUEUE_DIR*$JOB_EXT; do   # only .job files
