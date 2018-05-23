@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Move into the git root dir and run this script as ./install.sh
+# Instructions: navigate to the git root dir and run this script as ./install.sh
 
 ROOT='/nubq'
 
@@ -32,4 +32,4 @@ echo "[ -f /etc/bash.bashrc ] && . /etc/bash.bashrc" | sudo tee -a /etc/profile
 # apply for current session 
 source /etc/profile
 
-echo 'NubQ was installed! Use start-q to start it up.'
+echo 'NubQ was installed! Use start-q to start it up. (you may need to logout-login)'

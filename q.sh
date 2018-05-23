@@ -2,7 +2,7 @@
 
 # The job runner - periodically scans jobs dir and runs containing scripts. 
 
-source config.sh
+source /nubq/nubq/config.sh
 
 #exec > >(tee -ia "$LOGFILE")
 #exec 2> >(tee -ia "$ERRFILE")
@@ -39,7 +39,7 @@ while [ -f "$KILLSWITCH" ]; do
       file_done="$DONE_DIR$filename$DONE_EXT"
       header=$(printf "$JOB_HEADER_2" "$datetime_start" "$datetime_end" "$duration")
       echo -e "$header\n$(cat $file)" > $file_done
-      rm $file
+      rm -f $file
 
     done
 	sleep 10 # wait 10s before scanning for new files
