@@ -6,21 +6,23 @@
 ### HOW IT WORKS
 * Users add their scripts to the queue by calling `enqueue FILE1.sh FILE2.sh ...`
 * Enqueue copies their script to the `jobs` dir, renames them and prepends a header.
-* Q periodically scans the `jobs` dir and runs jobs in the order they were added. 
+* Q (the job runner) periodically scans the `jobs` dir and runs jobs in the order they were added. 
 * Once completed, the output, error log and the jobfile are moved to the `done` dir.
 
 ### ORGANIZATION
 NubQ is installed to `/` by default. This is the directory structure:
 
 ```
-nubq/
-	bin/
-		config.sh		# config file
+/nubq/
+	nubq/
+		KILLSWITCH 		# killswitch file
+		config.sh
 		enqueue			# command to add scripts to queue
-		install.sh		# install script
-		q.sh			# the actual job runner
-		uninstall.sh		# uninstall script
+		install.sh
+		q.sh			# Q - the actual job runner
+		readme.md
 		start-q			# startup script
+		uninstall.sh
 	done/
 		*.out 			# output of the job 
 		*.err 			# error output of the job
@@ -29,10 +31,8 @@ nubq/
 		*.job 			# jobfile
 	error.log 			# error log
 	jobs.log 			# activity log
-	KILLSWITCH 			# killswitch file
-	readme.md			# this readme
 ```
-The `nubq/bin/` folder is added to PATH for all users at installation, so everyone can call enqueue from anywhere. (is this ok? Would it be better to just move enqueue to `/usr/local/`?)
+The `/nubq/nubq/` folder is added to PATH for all users at installation, so everyone can call enqueue and start-q from anywhere.
 
 ### LOGGING
 Logs are located in the NubQ root dir. The `jobs.log` keeps track of when jobs were started and whether they completed successfully or not (*Hint: you can grep by username to get a list of all jobs by given user*). 
@@ -70,19 +70,20 @@ The killswitch is a simple mechanism to stop Q. It's an empty file, located in Q
 Note, that the killswitch has no effect while Q is executing a job - this does not protect us from infinite loops within job scripts, it just makes it easier to stop the daemon.
 
 ### INSTALLATION & USAGE
-* clone the repo
-* move into `bin` dir and execute `install.sh`
-* if no errors were generate, you are good to go!
+* clone the repo or download zip
+* run `./install.sh` (you have to be inside the dir!)
+* if no errors were generated, you are good to go!
 
-* run `sudo start-q` to start up the job runner daemon (you will have to do this after every reboot)
+* run `start-q` to start up the job runner daemon (you will have to do this after every reboot)
 * use `enqueue [SCRIPT1 SCRIPT2 ...]` to enqueue jobs
 
 ### TROUBLESHOOTING
-Make sure `/nubq/bin` is in your `PATH` environment variable.
+If `start-q` is not recognised immediately after installation try logging out and back in.
+If still no juice - make sure `/nubq/nubq` is in your `PATH` environment variable.
 Check the permissions on files in NubQ root dir. `KILLSWITCH` and `jobs` dir should be 777, the rest is 755. 
+If you changed the root path in the install script from `/nubq` to something else, check the other files and make changes accordingly.
 
 ### TODO
 * stop-q
-* uninstall script
 * look into running as a service
 * find a way to forcefully stop a running job
